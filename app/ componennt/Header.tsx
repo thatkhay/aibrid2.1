@@ -12,7 +12,9 @@ export default function Header() {
     <header className="w-full bg-[#242D33] text-white py-4">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6">
         {/* LEFT — NAME/LOGO */}
-        <div className="text-xl font-serif tracking-wide">AirBrid Music</div>
+        <Link href={""}>
+          <div className="text-xl font-serif tracking-wide">AirBrid Music</div>
+        </Link>
 
         {/* HAMBURGER ICON (Mobile) - With lighter opacity and hover effect */}
         <button

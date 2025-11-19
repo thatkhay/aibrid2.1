@@ -23,6 +23,7 @@ const HomePics = () => {
         <h1 className="text-5xl md:text-7xl font-bold mb-6 font-serif">
           AirBrid Music
         </h1>
+
         <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
           Discover the sound that moves you
         </p>
