@@ -45,9 +45,9 @@ const AboutPage = () => {
             </div>
 
             {/* Image - Right Side */}
-            <div className="relative w-full h-[600px] rounded-lg overflow-hidden shadow-2xl">
+            <div className="relative w-full h-[600px] rounded-lg overflow-hidden shadow-2xl border ">
               <Image
-                src="/about-image.jpg" // Replace with your actual image path
+                src="/assets/airbrid1.jpeg" // Replace with your actual image path
                 alt="AirBrid Music Producer"
                 fill
                 className="object-cover grayscale hover:grayscale-0 transition-all duration-500"

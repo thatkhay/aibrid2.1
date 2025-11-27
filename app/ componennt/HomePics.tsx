@@ -8,7 +8,7 @@ const HomePics = () => {
       {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="/hero-image.jpg" // Replace with your actual image path
+          src={"/"}
           alt="Artist on green couch"
           fill
           className="object-cover"

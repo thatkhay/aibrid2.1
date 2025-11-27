@@ -39,7 +39,7 @@ const MusicPage = () => {
               <iframe
                 width="100%"
                 height="315"
-                src="https://www.youtube.com/embed/YOUR_VIDEO_ID_1"
+                src="https://www.youtube.com/embed/mZw7cvHgN-U"
                 title="AirBrid Music - Beat Showcase 1"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

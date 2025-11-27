@@ -1,22 +1,44 @@
 "use client";
+import { AnimatePresence, motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
-import { FaInstagram, FaYoutube, FaSpotify } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { FaInstagram, FaSpotify, FaYoutube } from "react-icons/fa";
 import { HiMenuAlt3, HiX } from "react-icons/hi";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  // FUNCTION FOR ACTIVE BORDER
+  const linkClass = (path: string) =>
+    pathname === path
+      ? "border-b-2 border-white pb-1 text-white"
+      : "border-b-2 border-transparent pb-1 hover:border-white transition";
 
   return (
     <header className="w-full bg-[#242D33] text-white py-4">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6">
         {/* LEFT — NAME/LOGO */}
         <Link href={"/"} onClick={() => setIsOpen(false)}>
-          <div className="text-xl font-serif tracking-wide">AirBrid Music</div>
+          <div className="flex items-center gap-4">
+            <div className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-white/20">
+              <Image
+                src="/assets/airbrid1.jpeg"
+                alt="AirBrid Music Logo"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
+            <div className="text-xl font-serif tracking-wide">
+              AirBrid Music
+            </div>
+          </div>
         </Link>
 
-        {/* HAMBURGER ICON (Mobile) - With lighter opacity and hover effect */}
+        {/* HAMBURGER ICON */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden text-3xl focus:outline-none opacity-70 hover:opacity-100 transition-opacity duration-200"
@@ -27,26 +49,27 @@ export default function Header() {
 
         {/* CENTER — NAV LINKS (Desktop) */}
         <div className="hidden md:flex gap-8 text-lg items-center">
-          <Link href="/about" className="hover:text-gray-300 transition-colors">
+          <Link href="/about" className={linkClass("/about")}>
             About
           </Link>
-          <Link href="/music" className="hover:text-gray-300 transition-colors">
+
+          <Link href="/music" className={linkClass("/music")}>
             Music
           </Link>
-          <Link href="/tour" className="hover:text-gray-300 transition-colors">
+
+          <Link href="/tour" className={linkClass("/tour")}>
             Tour
           </Link>
-          <Link
-            href="/contact"
-            className="hover:text-gray-300 transition-colors"
-          >
+
+          <Link href="/contact" className={linkClass("/contact")}>
             Contact
           </Link>
-          <Link href="/blog" className="hover:text-gray-300 transition-colors">
+
+          <Link href="/blog" className={linkClass("/blog")}>
             Blog
           </Link>
 
-          {/* Active Button (Learn) */}
+          {/* Learn stays as the active button style */}
           <Link
             href="/learn"
             className="bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-gray-200 transition-colors"
@@ -57,12 +80,10 @@ export default function Header() {
 
         {/* RIGHT — ICONS + LOGIN (Desktop) */}
         <div className="hidden md:flex items-center gap-5 text-xl">
-          <Link
-            href="/login"
-            className="text-lg hover:text-gray-300 transition-colors"
-          >
+          <Link href="/login" className={linkClass("/login")}>
             Log In
           </Link>
+
           <Link
             href="https://www.instagram.com"
             target="_blank"
@@ -71,6 +92,7 @@ export default function Header() {
           >
             <FaInstagram />
           </Link>
+
           <Link
             href="https://www.youtube.com"
             target="_blank"
@@ -79,6 +101,7 @@ export default function Header() {
           >
             <FaYoutube />
           </Link>
+
           <Link
             href="https://www.spotify.com"
             target="_blank"
@@ -90,7 +113,7 @@ export default function Header() {
         </div>
       </nav>
 
-      {/* MOBILE MENU - Animated with Framer Motion */}
+      {/* MOBILE MENU */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -108,39 +131,44 @@ export default function Header() {
             >
               <Link
                 href="/about"
-                className="block text-lg hover:text-gray-300 transition-colors"
+                className={linkClass("/about")}
                 onClick={() => setIsOpen(false)}
               >
                 About
               </Link>
+
               <Link
                 href="/music"
-                className="block text-lg hover:text-gray-300 transition-colors"
+                className={linkClass("/music")}
                 onClick={() => setIsOpen(false)}
               >
                 Music
               </Link>
+
               <Link
                 href="/tour"
-                className="block text-lg hover:text-gray-300 transition-colors"
+                className={linkClass("/tour")}
                 onClick={() => setIsOpen(false)}
               >
                 Tour
               </Link>
+
               <Link
                 href="/contact"
-                className="block text-lg hover:text-gray-300 transition-colors"
+                className={linkClass("/contact")}
                 onClick={() => setIsOpen(false)}
               >
                 Contact
               </Link>
+
               <Link
                 href="/blog"
-                className="block text-lg hover:text-gray-300 transition-colors"
+                className={linkClass("/blog")}
                 onClick={() => setIsOpen(false)}
               >
                 Blog
               </Link>
+
               <Link
                 href="/learn"
                 className="bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-gray-200 transition-colors"
@@ -151,37 +179,22 @@ export default function Header() {
 
               <hr className="border-gray-600 my-4 w-full" />
 
-              {/* Mobile Social Icons + Login */}
               <Link
                 href="/login"
-                className="block text-lg hover:text-gray-300 transition-colors"
+                className={linkClass("/login")}
                 onClick={() => setIsOpen(false)}
               >
                 Log In
               </Link>
+
               <div className="flex gap-5 text-2xl pt-2">
-                <Link
-                  href="https://www.instagram.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-gray-300 transition-colors"
-                >
+                <Link href="https://www.instagram.com" target="_blank">
                   <FaInstagram />
                 </Link>
-                <Link
-                  href="https://www.youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-gray-300 transition-colors"
-                >
+                <Link href="https://www.youtube.com" target="_blank">
                   <FaYoutube />
                 </Link>
-                <Link
-                  href="https://www.spotify.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-gray-300 transition-colors"
-                >
+                <Link href="https://www.spotify.com" target="_blank">
                   <FaSpotify />
                 </Link>
               </div>
