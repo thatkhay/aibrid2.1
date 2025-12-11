@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
+import { motion, useInView } from "framer-motion";
 
 const TourPage = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,9 @@ const TourPage = () => {
   });
 
   const [status, setStatus] = useState("");
+
+  const formRef = useRef(null);
+  const isFormInView = useInView(formRef, { once: true, margin: "-100px" });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -29,81 +33,150 @@ const TourPage = () => {
     }, 1000);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut" as const,
+      },
+    },
+  };
+
   return (
     <div className="w-full">
       {/* Hero Image Section */}
-      <section className="relative w-full h-[60vh] md:h-[70vh]">
-        <Image
-          src="/assets/tour-hero.jpg" // Replace with your actual image path
-          alt="AirBrid Music Live Performance"
-          fill
-          className="object-cover"
-          priority
-        />
+      <section className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden">
+        <motion.div
+          initial={{ scale: 1.1 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.5, ease: "easeOut" }}
+          className="w-full h-full"
+        >
+          <Image
+            src="/images/image4.jpg"
+            alt="AirBrid Music Live Performance"
+            fill
+            className="object-cover"
+            priority
+          />
+        </motion.div>
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40" />
+        <motion.div
+          className="absolute inset-0 bg-black/40"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        />
       </section>
 
       {/* Form Section */}
-      <section className="w-full bg-[#E5E5E5] py-20 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#2C3640] mb-4">
+      <section className="w-full bg-[#1a1a1a] py-20 px-6">
+        <div className="max-w-2xl mx-auto text-center" ref={formRef}>
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            initial={{ opacity: 0, y: -30 }}
+            animate={isFormInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8 }}
+          >
             Find Out When AirBrid Music Will Play Near You
-          </h1>
-          <p className="text-lg text-gray-700 mb-12">
+          </motion.h1>
+
+          <motion.p
+            className="text-lg text-gray-300 mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isFormInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
             I&apos;ll send you an email when I&apos;m in your city.
-          </p>
+          </motion.p>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <motion.form
+            onSubmit={handleSubmit}
+            className="space-y-6"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isFormInView ? "visible" : "hidden"}
+          >
             {/* Email Input */}
-            <div>
-              <input
+            <motion.div variants={itemVariants}>
+              <motion.input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
                 placeholder="Email"
-                className="w-full px-6 py-4 bg-white border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-[#2C3640] focus:border-transparent transition-all"
+                className="w-full px-6 py-4 bg-[#2a2a2a] border border-gray-600 rounded-md text-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all"
+                whileFocus={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
               />
-            </div>
+            </motion.div>
 
             {/* City Input */}
-            <div>
-              <input
+            <motion.div variants={itemVariants}>
+              <motion.input
                 type="text"
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
                 required
                 placeholder="City"
-                className="w-full px-6 py-4 bg-white border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-[#2C3640] focus:border-transparent transition-all"
+                className="w-full px-6 py-4 bg-[#2a2a2a] border border-gray-600 rounded-md text-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent transition-all"
+                whileFocus={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
               />
-            </div>
+            </motion.div>
 
             {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={status === "sending"}
-              className="w-full bg-[#2C3640] text-white py-4 px-6 rounded-md text-lg font-semibold hover:bg-[#3a4a56] transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {status === "sending" ? "Submitting..." : "Submit"}
-            </button>
+            <motion.div variants={itemVariants}>
+              <motion.button
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full bg-white text-black py-4 px-6 rounded-md text-lg font-semibold hover:bg-gray-200 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                whileHover={{ scale: status === "sending" ? 1 : 1.02 }}
+                whileTap={{ scale: status === "sending" ? 1 : 0.98 }}
+                transition={{ duration: 0.2 }}
+              >
+                {status === "sending" ? "Submitting..." : "Submit"}
+              </motion.button>
+            </motion.div>
 
             {/* Status Messages */}
             {status === "success" && (
-              <div className="bg-green-50 text-green-800 p-4 rounded-md text-center">
+              <motion.div
+                className="bg-green-900/50 border border-green-500 text-green-200 p-4 rounded-md text-center"
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+              >
                 Success! You&apos;ll be notified when I&apos;m performing in
                 your city.
-              </div>
+              </motion.div>
             )}
 
             {/* Disclaimer Text */}
-            <p className="text-sm text-gray-600 mt-4">
+            <motion.p
+              className="text-sm text-gray-400 mt-4"
+              variants={itemVariants}
+            >
               No spam. Only concerts.
-            </p>
-          </form>
+            </motion.p>
+          </motion.form>
         </div>
       </section>
     </div>

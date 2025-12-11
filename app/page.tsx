@@ -1,4 +1,5 @@
 import HomePics from "./ componennt/HomePics";
+
 import Music from "./ componennt/Music";
 
 export default function Home() {

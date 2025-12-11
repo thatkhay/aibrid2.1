@@ -18,7 +18,7 @@ export default function Header() {
       : "border-b-2 border-transparent pb-1 hover:border-white transition";
 
   return (
-    <header className="w-full bg-[#242D33] text-white py-4">
+    <header className="w-full bg-[#391818] text-white py-4">
       <nav className="max-w-7xl mx-auto flex items-center justify-between px-6">
         {/* LEFT — NAME/LOGO */}
         <Link href={"/"} onClick={() => setIsOpen(false)}>
@@ -49,6 +49,10 @@ export default function Header() {
 
         {/* CENTER — NAV LINKS (Desktop) */}
         <div className="hidden md:flex gap-8 text-lg items-center">
+          <Link href="/" className={linkClass("/")}>
+            Home
+          </Link>
+
           <Link href="/about" className={linkClass("/about")}>
             About
           </Link>
@@ -65,27 +69,27 @@ export default function Header() {
             Contact
           </Link>
 
-          <Link href="/blog" className={linkClass("/blog")}>
+          {/* <Link href="/blog" className={linkClass("/blog")}>
             Blog
-          </Link>
+          </Link> */}
 
           {/* Learn stays as the active button style */}
-          <Link
+          {/* <Link
             href="/learn"
             className="bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-gray-200 transition-colors"
           >
             Learn
-          </Link>
+          </Link> */}
         </div>
 
         {/* RIGHT — ICONS + LOGIN (Desktop) */}
         <div className="hidden md:flex items-center gap-5 text-xl">
-          <Link href="/login" className={linkClass("/login")}>
+          {/* <Link href="/login" className={linkClass("/login")}>
             Log In
-          </Link>
+          </Link> */}
 
           <Link
-            href="https://www.instagram.com"
+            href="https://www.instagram.com/aibridwande/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-gray-300 transition-colors"
@@ -94,7 +98,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="https://www.youtube.com"
+            href="https://www.youtube.com/channel/UChwZqabI-Q4g0lQfL-hU23g"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-gray-300 transition-colors"
@@ -103,7 +107,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="https://www.spotify.com"
+            href="https://open.spotify.com/artist/6eGNSDjuuUepYdy32k1zXS"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-gray-300 transition-colors"
@@ -121,7 +125,7 @@ export default function Header() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden bg-[#1a2227] text-white overflow-hidden"
+            className="md:hidden bg-[#391818] text-white overflow-hidden"
           >
             <motion.div
               initial={{ y: -20 }}
@@ -129,6 +133,14 @@ export default function Header() {
               transition={{ delay: 0.1 }}
               className="px-6 py-4 space-y-4 flex flex-col items-center text-center"
             >
+              <Link
+                href="/"
+                className={linkClass("/")}
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </Link>
+
               <Link
                 href="/about"
                 className={linkClass("/about")}
@@ -161,40 +173,49 @@ export default function Header() {
                 Contact
               </Link>
 
-              <Link
+              {/* <Link
                 href="/blog"
                 className={linkClass("/blog")}
                 onClick={() => setIsOpen(false)}
               >
                 Blog
-              </Link>
+              </Link> */}
 
-              <Link
+              {/* <Link
                 href="/learn"
                 className="bg-white text-black px-4 py-2 rounded-md font-semibold hover:bg-gray-200 transition-colors"
                 onClick={() => setIsOpen(false)}
               >
                 Learn
-              </Link>
+              </Link> */}
 
               <hr className="border-gray-600 my-4 w-full" />
 
-              <Link
+              {/* <Link
                 href="/login"
                 className={linkClass("/login")}
                 onClick={() => setIsOpen(false)}
               >
                 Log In
-              </Link>
+              </Link> */}
 
               <div className="flex gap-5 text-2xl pt-2">
-                <Link href="https://www.instagram.com" target="_blank">
+                <Link
+                  href="https://www.instagram.com/aibridwande/"
+                  target="_blank"
+                >
                   <FaInstagram />
                 </Link>
-                <Link href="https://www.youtube.com" target="_blank">
+                <Link
+                  href="https://www.youtube.com/channel/UChwZqabI-Q4g0lQfL-hU23g"
+                  target="_blank"
+                >
                   <FaYoutube />
                 </Link>
-                <Link href="https://www.spotify.com" target="_blank">
+                <Link
+                  href="https://open.spotify.com/artist/6eGNSDjuuUepYdy32k1zXS"
+                  target="_blank"
+                >
                   <FaSpotify />
                 </Link>
               </div>
