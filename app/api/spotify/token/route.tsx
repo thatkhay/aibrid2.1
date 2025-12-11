@@ -21,6 +21,7 @@ export async function GET() {
     const data = await response.json();
     return Response.json(data);
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
+    return Response.json({ error: errorMessage }, { status: 500 });
   }
 }
