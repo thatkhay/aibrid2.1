@@ -298,7 +298,7 @@ const MusicPage = () => {
           </h2>
 
           {/* Channel ID Input */}
-          <div className="mb-8 bg-white rounded-lg p-6 shadow-lg">
+          {/* <div className="mb-8 bg-white rounded-lg p-6 shadow-lg">
             <label className="block text-sm font-medium mb-2 text-[#2C3640]">
               YouTube Channel ID
             </label>
@@ -313,7 +313,7 @@ const MusicPage = () => {
               Find channel ID in YouTube URL: youtube.com/channel/
               <strong>CHANNEL_ID</strong>
             </p>
-          </div>
+          </div> */}
 
           {youtubeError && (
             <div className="mb-8 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
