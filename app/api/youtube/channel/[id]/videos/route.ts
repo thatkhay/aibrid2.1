@@ -1,7 +1,5 @@
-// app/api/youtube/channel/[id]/videos/route.ts
 import { NextRequest, NextResponse } from "next/server";
 
-// Type definitions for YouTube API responses
 interface VideoId {
   videoId: string;
 }
@@ -109,13 +107,11 @@ export async function GET(
       );
     }
 
-    // Extract video IDs
     const videoIds = searchData.items
       .map((item: SearchResultItem) => item.id.videoId)
       .filter(Boolean)
       .join(",");
 
-    // Fetch video statistics (views, likes, comments)
     const statsResponse = await fetch(
       `https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds}&key=${apiKey}`,
       {
