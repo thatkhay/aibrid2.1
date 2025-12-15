@@ -1,4 +1,46 @@
+// app/api/youtube/channel/[id]/videos/route.ts
 import { NextRequest, NextResponse } from "next/server";
+
+// Type definitions for YouTube API responses
+interface VideoId {
+  videoId: string;
+}
+
+interface VideoSnippet {
+  title: string;
+  description: string;
+  channelId: string;
+  channelTitle: string;
+  publishedAt: string;
+}
+
+interface VideoStatistics {
+  viewCount: string;
+  likeCount: string;
+  commentCount: string;
+}
+
+interface SearchResultItem {
+  id: VideoId;
+  snippet: VideoSnippet;
+}
+
+interface VideoWithStats extends SearchResultItem {
+  statistics: VideoStatistics;
+}
+
+interface StatItem {
+  id: string;
+  statistics: VideoStatistics;
+}
+
+interface SearchResponse {
+  items: SearchResultItem[];
+}
+
+interface StatsResponse {
+  items: StatItem[];
+}
 
 export async function GET(
   request: NextRequest,
@@ -26,11 +68,10 @@ export async function GET(
       );
     }
 
-    // Fetch videos from the channel
     const searchResponse = await fetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=10&order=date&type=video&key=${apiKey}`,
       {
-        next: { revalidate: 3600 }, // Cache for 1 hour
+        next: { revalidate: 3600 },
       }
     );
 
@@ -51,7 +92,7 @@ export async function GET(
       );
     }
 
-    const searchData = await searchResponse.json();
+    const searchData: SearchResponse = await searchResponse.json();
 
     if (!searchData.items || searchData.items.length === 0) {
       return NextResponse.json(
@@ -70,7 +111,7 @@ export async function GET(
 
     // Extract video IDs
     const videoIds = searchData.items
-      .map((item: any) => item.id.videoId)
+      .map((item: SearchResultItem) => item.id.videoId)
       .filter(Boolean)
       .join(",");
 
@@ -82,24 +123,26 @@ export async function GET(
       }
     );
 
-    let statsData = { items: [] };
+    let statsData: StatsResponse = { items: [] };
     if (statsResponse.ok) {
       statsData = await statsResponse.json();
     }
 
-    const videosWithStats = searchData.items.map((video: any) => {
-      const stats = statsData.items.find(
-        (stat: any) => stat.id === video.id.videoId
-      );
-      return {
-        ...video,
-        statistics: stats?.statistics || {
-          viewCount: "0",
-          likeCount: "0",
-          commentCount: "0",
-        },
-      };
-    });
+    const videosWithStats: VideoWithStats[] = searchData.items.map(
+      (video: SearchResultItem) => {
+        const stats = statsData.items.find(
+          (stat: StatItem) => stat.id === video.id.videoId
+        );
+        return {
+          ...video,
+          statistics: stats?.statistics || {
+            viewCount: "0",
+            likeCount: "0",
+            commentCount: "0",
+          },
+        };
+      }
+    );
 
     return NextResponse.json(
       { items: videosWithStats },
