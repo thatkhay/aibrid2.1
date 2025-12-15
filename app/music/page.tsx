@@ -660,7 +660,7 @@ const MusicPage = () => {
               ))
             ) : (
               <div className="col-span-3 text-center py-8 text-gray-400">
-                Enter a Channel ID to load live videos
+                {/* Enter a Channel ID to load live videos */}
               </div>
             )}
           </motion.div>
@@ -668,7 +668,7 @@ const MusicPage = () => {
           {/* Watch More Button */}
           {channelId && (
             <motion.div
-              className="flex justify-start"
+              className="flex justify-center"
               initial={{ opacity: 0, y: 20 }}
               animate={isLiveVideosInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4 }}
