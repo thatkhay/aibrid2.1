@@ -15,7 +15,6 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 
-// Type definitions
 interface SpotifyStats {
   monthlyListeners: number;
   followers: number;
